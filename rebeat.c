@@ -3,6 +3,10 @@
 #include <string.h>
 #include "raylib.h"
 
+#define RAYGUI_IMPLEMENTATION
+#define RAYGUI_SUPPORT_ICONS
+#include "src/raygui.h"
+
 int main(int argc, char *argv[])
 {
     printf("re:Beat - sampler/sequencer/drum machine/thing");
@@ -85,20 +89,25 @@ int main(int argc, char *argv[])
 
             ClearBackground(RAYWHITE);
             DrawFPS(620,0);
-            DrawText("re:Beat READY...", 10, 0, 20, GREEN);
+            
+            if (GuiButton((Rectangle){ 0, 0, 115, 30 }, "#01# Open song")) { }
+            if (GuiButton((Rectangle){ 116, 0, 115, 30 }, "#02# Save song")) { }
+            if (GuiButton((Rectangle){ 200, 0, 115, 30 }, running ? "#133# Stop" : "#131# Play")) { running = running ? false: true; }
+            
+            // DrawText("re:Beat READY...", 10, 0, 20, GREEN);
             // DrawText(TextFormat("step=%d, tick=%d", step, tickcnt), 470, 0, 20, LIGHTGRAY);
             int x;
             int y;
             for (x=0; x<16; x++) {
                 for (y=0; y<8; y++) {
-                    DrawRectangleLines(100 + (30*x), 20 + (30*y),30, 30, DARKBLUE);
+                    DrawRectangleLines(100 + (30*x), 30 + (30*y),30, 30, DARKBLUE);
                     if (drums[(16*y) + x]==1) {
                         DrawCircle(115 + (30*x), 35 + (30*y), 10, GRAY);
                     }
                     
                     if (IsMouseButtonReleased(0)) {
                         Vector2 mousePos = GetMousePosition();
-                        if (mousePos.x >= 100 + (30*x) &&  mousePos.x <= 130 + (30*x) && mousePos.y >= 20 + (30*y) &&  mousePos.y <= 50 + (30*y)) {
+                        if (mousePos.x >= 100 + (30*x) &&  mousePos.x <= 130 + (30*x) && mousePos.y >= 30 + (30*y) &&  mousePos.y <= 60 + (30*y)) {
                             drums[(16*y) + x] = drums[(16*y) + x]==0 ? 1 : 0;
                             // DrawText(TextFormat("Yes"), 100 + (30*x), 20 + (30*y), 20, RED);
                         }
@@ -110,16 +119,16 @@ int main(int argc, char *argv[])
                 }
             }
             
-            DrawCircle(115+(step*30),275, 10, RED);
+            DrawCircle(115+(step*30),285, 10, RED);
             
-            DrawText("j1_tom", 0, 20 + (30*0), 20, DARKGRAY);
-            DrawText("krabice", 0, 20 + (30*1), 20, DARKGRAY);
-            DrawText("clap", 0, 20 + (30*2), 20, DARKGRAY);
-            DrawText("pixi_base", 0, 20 + (30*3), 20, DARKGRAY);
-            DrawText("plechovka", 0, 20 + (30*4), 20, DARKGRAY);
-            DrawText("j1_basa", 0, 20 + (30*5), 20, DARKGRAY);
-            DrawText("j1_bass39", 0, 20 + (30*6), 20, DARKGRAY);
-            DrawText("j1_housle", 0, 20 + (30*7), 20, DARKGRAY);
+            DrawText("j1_tom", 0, 20 + (30*0), 10, DARKGRAY);
+            DrawText("krabice", 0, 20 + (30*1), 10, DARKGRAY);
+            DrawText("clap", 0, 20 + (30*2), 10, DARKGRAY);
+            DrawText("pixi_base", 0, 20 + (30*3), 10, DARKGRAY);
+            DrawText("plechovka", 0, 20 + (30*4), 10, DARKGRAY);
+            DrawText("j1_basa", 0, 20 + (30*5), 10, DARKGRAY);
+            DrawText("j1_bass39", 0, 20 + (30*6), 10, DARKGRAY);
+            DrawText("j1_housle", 0, 20 + (30*7), 10, DARKGRAY);
             
             DrawText("press SPACE to start/stop", 100, 333, 20, BLUE);
             DrawText("press DELETE to ZAP data", 100, 353, 20, BLUE);
